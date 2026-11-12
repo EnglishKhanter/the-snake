@@ -70,14 +70,11 @@ class Apple(GameObject):
 
     def randomize_position(self, occupied_positions=()):
         """Размещает яблоко в случайной свободной ячейке игрового поля."""
-        free_positions = [
-            (column * GRID_SIZE, row * GRID_SIZE)
-            for column in range(GRID_WIDTH)
-            for row in range(GRID_HEIGHT)
-            if (column * GRID_SIZE, row * GRID_SIZE) not in occupied_positions
-        ]
-        if free_positions:
-            self.position = free_positions[randint(0, len(free_positions) - 1)]
+        while self.position in occupied_positions:
+            self.position = (
+                randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+                randint(0, GRID_HEIGHT - 1) * GRID_SIZE,
+            )
 
     def draw(self):
         """Отрисовывает яблоко на игровом поле."""
