@@ -109,7 +109,7 @@ class Snake(GameObject):
 
     def move(self):
         """Перемещает змейку на одну клетку в текущем направлении."""
-        head_x, head_y = self.positions[0]
+        head_x, head_y = self.get_head_position()
         direction_x, direction_y = self.direction
         new_head = (
             (head_x + direction_x * GRID_SIZE) % SCREEN_WIDTH,
@@ -129,7 +129,7 @@ class Snake(GameObject):
     def draw(self):
         """Отрисовывает голову змейки и затирает последний сегмент."""
         # Отрисовка головы змейки.
-        self.draw_cell(self.positions[0])
+        self.draw_cell(self.get_head_position())
 
         # Затирание последнего сегмента.
         if self.last:
