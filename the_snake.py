@@ -58,16 +58,20 @@ class GameObject:
 class Apple(GameObject):
     """Яблоко, которое собирает змейка."""
 
-    def __init__(self):
+    def __init__(self, occupied_positions=()):
         super().__init__(APPLE_COLOR)
-        self.randomize_position()
+        self.randomize_position(occupied_positions)
 
-    def randomize_position(self):
-        """Размещает яблоко в случайной ячейке игрового поля."""
-        self.position = (
-            randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-            randint(0, GRID_HEIGHT - 1) * GRID_SIZE,
-        )
+    def randomize_position(self, occupied_positions=()):
+        """Размещает яблоко в случайной свободной ячейке игрового поля."""
+        free_positions = [
+            (column * GRID_SIZE, row * GRID_SIZE)
+            for column in range(GRID_WIDTH)
+            for row in range(GRID_HEIGHT)
+            if (column * GRID_SIZE, row * GRID_SIZE) not in occupied_positions
+        ]
+        if free_positions:
+            self.position = free_positions[randint(0, len(free_positions) - 1)]
 
     def draw(self):
         """Отрисовывает яблоко на игровом поле."""
@@ -146,8 +150,8 @@ def main():
     # Инициализация PyGame:
     pygame.init()
 
-    apple = Apple()
     snake = Snake()
+    apple = Apple(snake.positions)
 
     while True:
         clock.tick(SPEED)
@@ -159,12 +163,12 @@ def main():
         # Если змейка съела яблоко — увеличиваем длину и создаём новое яблоко.
         if snake.get_head_position() == apple.position:
             snake.length += 1
-            apple.randomize_position()
+            apple.randomize_position(snake.positions)
 
         # Если змейка врезалась в себя — начинаем игру заново.
         if snake.get_head_position() in snake.positions[1:]:
             snake.reset()
-            apple.randomize_position()
+            apple.randomize_position(snake.positions)
 
         screen.fill(BOARD_BACKGROUND_COLOR)
         apple.draw()
