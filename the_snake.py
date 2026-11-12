@@ -40,6 +40,14 @@ class GameObject:
         self.body_color = body_color
         self.position = position
 
+    def draw_cell(self, position, color=None):
+        """Отрисовывает одну ячейку игрового поля."""
+        if color is None:
+            color = self.body_color
+        rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
+        pygame.draw.rect(screen, color, rect)
+        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+
     def draw(self):
         """Отрисовка объекта. Переопределяется в дочерних классах."""
         raise NotImplementedError
@@ -61,9 +69,7 @@ class Apple(GameObject):
 
     def draw(self):
         """Отрисовывает яблоко на игровом поле."""
-        rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
-        pygame.draw.rect(screen, self.body_color, rect)
-        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+        self.draw_cell(self.position)
 
 
 class Snake(GameObject):
@@ -108,20 +114,12 @@ class Snake(GameObject):
 
     def draw(self):
         """Отрисовывает змейку на игровом поле."""
-        for position in self.positions[:-1]:
-            rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
-            pygame.draw.rect(screen, self.body_color, rect)
-            pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
-
-        # Отрисовка головы змейки.
-        head_rect = pygame.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
-        pygame.draw.rect(screen, self.body_color, head_rect)
-        pygame.draw.rect(screen, BORDER_COLOR, head_rect, 1)
+        for position in self.positions:
+            self.draw_cell(position)
 
         # Затирание последнего сегмента.
         if self.last:
-            last_rect = pygame.Rect(self.last, (GRID_SIZE, GRID_SIZE))
-            pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
+            self.draw_cell(self.last, BOARD_BACKGROUND_COLOR)
 
 
 def handle_keys(game_object):
