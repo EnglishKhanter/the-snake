@@ -17,6 +17,22 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
+# Новое направление в зависимости от текущего направления и нажатой клавиши:
+DIRECTIONS = {
+    (LEFT, pg.K_UP): UP,
+    (RIGHT, pg.K_UP): UP,
+    (UP, pg.K_UP): UP,
+    (LEFT, pg.K_DOWN): DOWN,
+    (RIGHT, pg.K_DOWN): DOWN,
+    (DOWN, pg.K_DOWN): DOWN,
+    (UP, pg.K_LEFT): LEFT,
+    (DOWN, pg.K_LEFT): LEFT,
+    (LEFT, pg.K_LEFT): LEFT,
+    (UP, pg.K_RIGHT): RIGHT,
+    (DOWN, pg.K_RIGHT): RIGHT,
+    (RIGHT, pg.K_RIGHT): RIGHT,
+}
+
 # Цвета элементов игры:
 BOARD_BACKGROUND_COLOR = (0, 0, 0)
 BORDER_COLOR = (93, 216, 228)
@@ -143,14 +159,11 @@ def handle_keys(game_object):
             pg.quit()
             raise SystemExit
         if event.type == pg.KEYDOWN:
-            if event.key == pg.K_UP and game_object.direction != DOWN:
-                game_object.next_direction = UP
-            elif event.key == pg.K_DOWN and game_object.direction != UP:
-                game_object.next_direction = DOWN
-            elif event.key == pg.K_LEFT and game_object.direction != RIGHT:
-                game_object.next_direction = LEFT
-            elif event.key == pg.K_RIGHT and game_object.direction != LEFT:
-                game_object.next_direction = RIGHT
+            new_direction = DIRECTIONS.get(
+                (game_object.direction, event.key)
+            )
+            if new_direction is not None:
+                game_object.next_direction = new_direction
 
 
 def main():
