@@ -108,10 +108,10 @@ class Snake(GameObject):
     def move(self):
         """Перемещает змейку на одну клетку в текущем направлении."""
         head_x, head_y = self.positions[0]
-        dx, dy = self.direction
+        direction_x, direction_y = self.direction
         new_head = (
-            (head_x + dx * GRID_SIZE) % SCREEN_WIDTH,
-            (head_y + dy * GRID_SIZE) % SCREEN_HEIGHT,
+            (head_x + direction_x * GRID_SIZE) % SCREEN_WIDTH,
+            (head_y + direction_y * GRID_SIZE) % SCREEN_HEIGHT,
         )
         self.positions.insert(0, new_head)
 
