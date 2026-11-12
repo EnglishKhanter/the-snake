@@ -8,6 +8,9 @@ GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
+# Координаты центра экрана:
+CENTER = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
 # Направления движения:
 UP = (0, -1)
 DOWN = (0, 1)
@@ -39,7 +42,7 @@ class GameObject:
     def __init__(
         self,
         body_color=(0, 0, 0),
-        position=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),
+        position=CENTER,
     ):
         self.body_color = body_color
         self.position = position
@@ -91,7 +94,7 @@ class Snake(GameObject):
     def reset(self):
         """Возвращает змейку в начальное состояние."""
         self.length = 1
-        self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
+        self.positions = [CENTER]
         self.direction = RIGHT
         self.next_direction = None
         self.last = None
