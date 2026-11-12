@@ -127,13 +127,13 @@ class Snake(GameObject):
         return self.positions[0]
 
     def draw(self):
-        """Отрисовывает голову змейки и затирает последний сегмент."""
-        # Отрисовка головы змейки.
-        self.draw_cell(self.get_head_position())
-
+        """Затирает последний сегмент и отрисовывает голову змейки."""
         # Затирание последнего сегмента.
         if self.last:
             self.draw_cell(self.last, BOARD_BACKGROUND_COLOR)
+
+        # Отрисовка головы змейки.
+        self.draw_cell(self.get_head_position())
 
 
 def handle_keys(game_object):
