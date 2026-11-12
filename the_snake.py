@@ -179,7 +179,7 @@ def main():
             apple.randomize_position(snake.positions)
 
         # Если змейка врезалась в себя — начинаем игру заново.
-        if snake.get_head_position() in snake.positions[1:]:
+        elif snake.get_head_position() in snake.positions[1:]:
             snake.reset()
             apple.randomize_position(snake.positions)
             screen.fill(BOARD_BACKGROUND_COLOR)
