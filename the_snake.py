@@ -161,6 +161,7 @@ def main():
     snake = Snake()
     apple = Apple(snake.positions)
 
+    # Экран очищается один раз перед началом игры.
     screen.fill(BOARD_BACKGROUND_COLOR)
     snake.draw()
     apple.draw()
@@ -182,6 +183,7 @@ def main():
         elif snake.get_head_position() in snake.positions[1:]:
             snake.reset()
             apple.randomize_position(snake.positions)
+            # При рестарте очищаем экран целиком.
             screen.fill(BOARD_BACKGROUND_COLOR)
 
         snake.draw()
