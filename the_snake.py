@@ -68,8 +68,7 @@ class GameObject:
 
     def draw_cell(self, position, color=None):
         """Отрисовывает одну ячейку игрового поля."""
-        if color is None:
-            color = self.body_color
+        color = color or self.body_color
         rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
         pg.draw.rect(screen, color, rect)
         # Для цвета фона рамку не рисуем — так ячейка полностью затирается.
