@@ -114,7 +114,7 @@ class Snake(GameObject):
     def reset(self):
         """Возвращает змейку в начальное состояние."""
         self.length = 1
-        self.positions = [CENTER]
+        self.positions = [self.position]
         self.direction = RIGHT
         self.next_direction = None
         self.last = None
