@@ -161,11 +161,10 @@ def handle_keys(game_object):
             pg.quit()
             raise SystemExit
         if event.type == pg.KEYDOWN:
-            new_direction = DIRECTIONS.get(
-                (game_object.direction, event.key)
+            game_object.next_direction = DIRECTIONS.get(
+                (game_object.direction, event.key),
+                game_object.direction,
             )
-            if new_direction is not None:
-                game_object.next_direction = new_direction
 
 
 def main():
