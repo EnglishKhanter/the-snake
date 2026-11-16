@@ -39,6 +39,9 @@ BORDER_COLOR = (93, 216, 228)
 APPLE_COLOR = (255, 0, 0)
 SNAKE_COLOR = (0, 255, 0)
 
+# Цвет по умолчанию для игровых объектов:
+DEFAULT_COLOR = (0, 0, 0)
+
 # Скорость движения змейки (ходов в секунду):
 SPEED = 10
 
@@ -57,7 +60,7 @@ class GameObject:
 
     def __init__(
         self,
-        body_color=(0, 0, 0),
+        body_color=DEFAULT_COLOR,
         position=CENTER,
     ):
         self.body_color = body_color
